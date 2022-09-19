@@ -28,7 +28,11 @@ class _TODOListPageState extends State<TODOListPage> {
               itemBuilder: (BuildContext context, int index) => _ListItem(
                 item: todoList[index],
                 onLongPress: (item) {
-                  print(item);
+                  final result = showDialog<String>(
+                    context: context,
+                    builder: (context) => _TODOListCustomDialog(item: item),
+                  );
+                  print(result);
                 },
               ),
             ),
@@ -104,4 +108,28 @@ class _ListItem extends StatelessWidget {
       ),
     );
   }
+}
+
+class _TODOListCustomDialog extends StatelessWidget {
+  const _TODOListCustomDialog({Key? key, required this.item}) : super(key: key);
+
+  final String item;
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+        title: const Text('할일 수정/삭제'),
+        content: TextFormField(
+          initialValue: item,
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Delete'),
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Confirm'),
+            child: const Text('Confirm'),
+          ),
+        ],
+      );
 }
