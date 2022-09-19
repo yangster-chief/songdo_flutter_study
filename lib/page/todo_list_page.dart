@@ -59,6 +59,7 @@ class _TODOListPageState extends State<TODOListPage> {
   void _onPressed() {
     setState(() {
       todoList.add(_todoController.text);
+      _todoController.clear();
     });
   }
 }
