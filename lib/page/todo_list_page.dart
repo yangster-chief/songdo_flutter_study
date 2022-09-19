@@ -32,7 +32,14 @@ class _TODOListPageState extends State<TODOListPage> {
                     context: context,
                     builder: (context) => _TODOListCustomDialog(item: item),
                   );
-                  print(result);
+                  setState(() {
+                    if (result == 'Delete') {
+                      todoList.removeAt(index);
+                    } else {
+                      print(result);
+                      todoList[index] = result ?? '';
+                    }
+                  });
                 },
               ),
             ),
@@ -110,16 +117,29 @@ class _ListItem extends StatelessWidget {
   }
 }
 
-class _TODOListCustomDialog extends StatelessWidget {
+class _TODOListCustomDialog extends StatefulWidget {
   const _TODOListCustomDialog({Key? key, required this.item}) : super(key: key);
 
   final String item;
 
   @override
+  State<_TODOListCustomDialog> createState() => _TODOListCustomDialogState();
+}
+
+class _TODOListCustomDialogState extends State<_TODOListCustomDialog> {
+  late TextEditingController _itemController;
+
+  @override
+  void initState() {
+    super.initState();
+    _itemController = TextEditingController(text: widget.item);
+  }
+
+  @override
   Widget build(BuildContext context) => AlertDialog(
         title: const Text('할일 수정/삭제'),
         content: TextFormField(
-          initialValue: item,
+          controller: _itemController,
         ),
         actions: <Widget>[
           TextButton(
@@ -127,8 +147,8 @@ class _TODOListCustomDialog extends StatelessWidget {
             child: const Text('Delete', style: TextStyle(color: Colors.red)),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Confirm'),
-            child: const Text('Confirm'),
+            onPressed: () => Navigator.pop(context, _itemController.text),
+            child: const Text('Update'),
           ),
         ],
       );
