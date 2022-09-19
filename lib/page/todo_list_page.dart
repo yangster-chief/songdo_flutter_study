@@ -21,12 +21,47 @@ class _TODOListPageState extends State<TODOListPage> {
   //   'FlutterFire 적용',
   // ];
 
+  final _todoController = TextEditingController();
+
   @override
-  Widget build(BuildContext context) => ListView.builder(
-        itemCount: 255,
-        itemBuilder: (BuildContext context, int index) =>
-            _ListItem(item: '$index 번째 아이템'),
+  Widget build(BuildContext context) => Stack(
+        children: [
+          ListView.builder(
+            itemCount: 255,
+            itemBuilder: (BuildContext context, int index) =>
+                _ListItem(item: '$index 번째 아이템'),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              color: Colors.white,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _todoController,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(), hintText: '할일 입력'),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  SizedBox(
+                    width: 72,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: _onPressed,
+                      child: const Text('add'),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       );
+
+  void _onPressed() {}
 }
 
 class _ListItem extends StatelessWidget {
