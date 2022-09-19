@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_study/page/bmi_calculator_page.dart';
 import 'package:flutter_study/page/counter_page.dart';
 
 void main() {
@@ -24,11 +25,7 @@ class _MyAppState extends State<MyApp> {
 
   final List<Widget> _widgetOptions = <Widget>[
     const CounterPage(),
-    const Center(
-      child: Text(
-        'Index 1',
-      ),
-    ),
+    const BMICalculatorPage(),
     const Center(
       child: Text(
         'Index 2',
