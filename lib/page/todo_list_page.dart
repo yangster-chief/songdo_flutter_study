@@ -61,7 +61,9 @@ class _TODOListPageState extends State<TODOListPage> {
         ],
       );
 
-  void _onPressed() {}
+  void _onPressed() {
+    print(_todoController.text);
+  }
 }
 
 class _ListItem extends StatelessWidget {
