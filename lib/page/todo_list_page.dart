@@ -25,8 +25,12 @@ class _TODOListPageState extends State<TODOListPage> {
           Expanded(
             child: ListView.builder(
               itemCount: todoList.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  _ListItem(item: todoList[index]),
+              itemBuilder: (BuildContext context, int index) => _ListItem(
+                item: todoList[index],
+                onLongPress: (item) {
+                  print(item);
+                },
+              ),
             ),
           ),
           Container(
@@ -65,19 +69,32 @@ class _TODOListPageState extends State<TODOListPage> {
 }
 
 class _ListItem extends StatelessWidget {
-  const _ListItem({Key? key, required this.item}) : super(key: key);
+  const _ListItem({
+    Key? key,
+    required this.item,
+    required this.onLongPress,
+  }) : super(key: key);
 
   final String item;
+
+  final void Function(String) onLongPress;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: SizedBox(
-        height: 56,
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8.0),
+        onLongPress: () {
+          onLongPress(item);
+        },
+        child: Container(
+          height: 56,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(width: 1, color: Colors.grey),
+          ),
+          child: Center(
             child: Text(
               item,
               textAlign: TextAlign.center,
