@@ -15,6 +15,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _selectedIndex = 0;
 
+  final List<String> _titles = [
+    'Counter App',
+    'BMI Calculator App',
+    'TO DO List App',
+    'Stopwatch App',
+  ];
+
   final List<Widget> _widgetOptions = <Widget>[
     const CounterPage(),
     const Center(
@@ -42,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('widget.title'),
+          title: Text(_titles[_selectedIndex]),
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
