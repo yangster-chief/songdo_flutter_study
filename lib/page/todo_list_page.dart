@@ -15,17 +15,17 @@ class TODOListPage extends StatefulWidget {
 }
 
 class _TODOListPageState extends State<TODOListPage> {
-  List<String> todoList = [
-    'Flutter study 1주차 숙제 하기',
-    'Flutter docs 정독하기',
-    'FlutterFire 적용',
-  ];
+  // List<String> todoList = [
+  //   'Flutter study 1주차 숙제 하기',
+  //   'Flutter docs 정독하기',
+  //   'FlutterFire 적용',
+  // ];
 
   @override
   Widget build(BuildContext context) => ListView.builder(
-        itemCount: todoList.length,
+        itemCount: 255,
         itemBuilder: (BuildContext context, int index) =>
-            _ListItem(item: todoList[index]),
+            _ListItem(item: '$index 번째 아이템'),
       );
 }
 
