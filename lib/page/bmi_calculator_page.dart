@@ -19,8 +19,8 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
 
   final _weightController = TextEditingController();
 
-  String _height = '';
-  String _weight = '';
+  int _height = 0;
+  int _weight = 0;
 
   @override
   Widget build(BuildContext context) => Center(
@@ -32,12 +32,14 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _heightController,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), hintText: '키 입력'),
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _weightController,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), hintText: '몸무게 입력'),
               ),
@@ -60,8 +62,8 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
 
   void _onPressed() {
     setState(() {
-      _height = _heightController.text;
-      _weight = _weightController.text;
+      _height = int.tryParse(_heightController.text) ?? 0;
+      _weight = int.tryParse(_weightController.text) ?? 0;
     });
   }
 }
