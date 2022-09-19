@@ -17,13 +17,23 @@ class BMICalculatorPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextFormField(),
               const SizedBox(height: 16),
-              TextFormField(),
+              TextFormField(
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), hintText: '키 입력'),
+              ),
               const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _onPressed,
-                child: const Text('계산하기'),
+              TextFormField(
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), hintText: '몸무게 입력'),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: _onPressed,
+                  child: const Text('계산하기'),
+                ),
               ),
             ],
           ),
