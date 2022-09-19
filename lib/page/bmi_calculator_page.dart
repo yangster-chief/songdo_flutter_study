@@ -55,12 +55,16 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
       );
 
   void _onPressed() {
+    final bmi = _calculateBMI(
+      height: int.tryParse(_heightController.text) ?? 0,
+      weight: int.tryParse(_weightController.text) ?? 0,
+    );
+
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => BMICalculateResultPage(
-          height: int.tryParse(_heightController.text) ?? 0,
-          weight: int.tryParse(_weightController.text) ?? 0,
+          bmi: bmi,
         ),
       ),
     );

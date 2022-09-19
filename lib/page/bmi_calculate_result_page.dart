@@ -8,12 +8,9 @@ import 'package:flutter/material.dart';
 /// Description:
 ///
 class BMICalculateResultPage extends StatelessWidget {
-  const BMICalculateResultPage(
-      {Key? key, required this.height, required this.weight})
-      : super(key: key);
+  const BMICalculateResultPage({Key? key, required this.bmi}) : super(key: key);
 
-  final int height;
-  final int weight;
+  final double bmi;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -21,7 +18,7 @@ class BMICalculateResultPage extends StatelessWidget {
           title: const Text('BMI Result'),
         ),
         body: Center(
-          child: Text('키 : $height, 몸무게 : $weight'),
+          child: Text('bmi : $bmi'),
         ),
       );
 }
