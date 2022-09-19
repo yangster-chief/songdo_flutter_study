@@ -19,8 +19,7 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
 
   final _weightController = TextEditingController();
 
-  int _height = 0;
-  int _weight = 0;
+  double _bmi = 0;
 
   @override
   Widget build(BuildContext context) => Center(
@@ -52,18 +51,22 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                 ),
               ),
               const SizedBox(height: 32),
-              Text('키 : $_height'),
-              const SizedBox(height: 16),
-              Text('몸무게 : $_weight'),
+              Text('BMI 지수 : $_bmi'),
             ],
           ),
         ),
       );
 
   void _onPressed() {
+    _calculateBMI(
+      height: int.tryParse(_heightController.text) ?? 0,
+      weight: int.tryParse(_weightController.text) ?? 0,
+    );
+  }
+
+  void _calculateBMI({required int height, required int weight}) {
     setState(() {
-      _height = int.tryParse(_heightController.text) ?? 0;
-      _weight = int.tryParse(_weightController.text) ?? 0;
+      _bmi = weight / ((height / 100) * (height / 100));
     });
   }
 }
