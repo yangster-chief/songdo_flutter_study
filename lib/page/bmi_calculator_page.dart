@@ -11,9 +11,16 @@ class BMICalculatorPage extends StatelessWidget {
   const BMICalculatorPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('BMI Cal'),
-    );
-  }
+  Widget build(BuildContext context) => Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Text('키'),
+              Text('몸무게'),
+              Text('제출'),
+            ],
+          ),
+        ),
+      );
 }
