@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 /// Description:
 ///
 class BMICalculatorPage extends StatelessWidget {
-  const BMICalculatorPage({Key? key}) : super(key: key);
+  BMICalculatorPage({Key? key}) : super(key: key);
 
+  final heightController = TextEditingController();
+  final weightController = TextEditingController();
   @override
   Widget build(BuildContext context) => Center(
         child: Padding(
@@ -19,11 +21,13 @@ class BMICalculatorPage extends StatelessWidget {
             children: [
               const SizedBox(height: 16),
               TextFormField(
+                controller: heightController,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), hintText: '키 입력'),
               ),
               const SizedBox(height: 16),
               TextFormField(
+                controller: weightController,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), hintText: '몸무게 입력'),
               ),
@@ -40,5 +44,8 @@ class BMICalculatorPage extends StatelessWidget {
         ),
       );
 
-  void _onPressed() {}
+  void _onPressed() {
+    print('키: ${heightController.text}');
+    print('몸무게: ${weightController.text}');
+  }
 }

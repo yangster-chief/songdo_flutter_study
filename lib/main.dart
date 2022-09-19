@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
 
   final List<Widget> _widgetOptions = <Widget>[
     const CounterPage(),
-    const BMICalculatorPage(),
+    BMICalculatorPage(),
     const Center(
       child: Text(
         'Index 2',
