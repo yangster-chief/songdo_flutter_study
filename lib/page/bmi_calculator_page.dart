@@ -7,11 +7,21 @@ import 'package:flutter/material.dart';
 ///
 /// Description:
 ///
-class BMICalculatorPage extends StatelessWidget {
-  BMICalculatorPage({Key? key}) : super(key: key);
+class BMICalculatorPage extends StatefulWidget {
+  const BMICalculatorPage({Key? key}) : super(key: key);
 
-  final heightController = TextEditingController();
-  final weightController = TextEditingController();
+  @override
+  State<BMICalculatorPage> createState() => _BMICalculatorPageState();
+}
+
+class _BMICalculatorPageState extends State<BMICalculatorPage> {
+  final _heightController = TextEditingController();
+
+  final _weightController = TextEditingController();
+
+  String _height = '';
+  String _weight = '';
+
   @override
   Widget build(BuildContext context) => Center(
         child: Padding(
@@ -21,13 +31,13 @@ class BMICalculatorPage extends StatelessWidget {
             children: [
               const SizedBox(height: 16),
               TextFormField(
-                controller: heightController,
+                controller: _heightController,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), hintText: '키 입력'),
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: weightController,
+                controller: _weightController,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), hintText: '몸무게 입력'),
               ),
@@ -39,13 +49,19 @@ class BMICalculatorPage extends StatelessWidget {
                   child: const Text('계산하기'),
                 ),
               ),
+              const SizedBox(height: 32),
+              Text('키 : $_height'),
+              const SizedBox(height: 16),
+              Text('몸무게 : $_weight'),
             ],
           ),
         ),
       );
 
   void _onPressed() {
-    print('키: ${heightController.text}');
-    print('몸무게: ${weightController.text}');
+    setState(() {
+      _height = _heightController.text;
+      _weight = _weightController.text;
+    });
   }
 }
