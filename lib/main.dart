@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_study/page/bmi_calculator_page.dart';
-import 'package:flutter_study/page/counter_page.dart';
+import 'package:flutter_study/pages.dart';
 
 void main() {
   runApp(const MyApp());
