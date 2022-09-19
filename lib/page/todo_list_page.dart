@@ -36,8 +36,20 @@ class _ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(item),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: SizedBox(
+        height: 56,
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              item,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
