@@ -18,18 +18,14 @@ class _MyAppState extends State<MyApp> {
   final List<String> _titles = [
     'Counter App',
     'BMI Calculator App',
-    'TO DO List App',
+    'TODO List App',
     'Stopwatch App',
   ];
 
   final List<Widget> _widgetOptions = <Widget>[
     const CounterPage(),
     const BMICalculatorPage(),
-    const Center(
-      child: Text(
-        'Index 2',
-      ),
-    ),
+    const TODOListPage(),
     const Center(
       child: Text(
         'Index 3',
@@ -57,7 +53,7 @@ class _MyAppState extends State<MyApp> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.calculate_outlined), label: 'BMI Cal'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.task_alt_rounded), label: 'To-do list'),
+                icon: Icon(Icons.task_alt_rounded), label: 'TODO list'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.watch_later_outlined), label: 'Stopwatch'),
           ],
