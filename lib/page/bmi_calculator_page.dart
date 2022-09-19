@@ -15,12 +15,20 @@ class BMICalculatorPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('키'),
-              Text('몸무게'),
-              Text('제출'),
+              TextFormField(),
+              const SizedBox(height: 16),
+              TextFormField(),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _onPressed,
+                child: const Text('계산하기'),
+              ),
             ],
           ),
         ),
       );
+
+  void _onPressed() {}
 }
