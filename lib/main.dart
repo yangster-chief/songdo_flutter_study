@@ -69,6 +69,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _onItemTapped(int index) {
-    print(index);
+    _selectedIndex = index;
   }
 }
