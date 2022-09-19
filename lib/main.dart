@@ -52,6 +52,7 @@ class _MyAppState extends State<MyApp> {
           currentIndex: _selectedIndex,
           unselectedItemColor: Colors.grey,
           selectedItemColor: Colors.lightBlue,
+          onTap: _onItemTapped,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Counter'),
             BottomNavigationBarItem(
@@ -65,5 +66,9 @@ class _MyAppState extends State<MyApp> {
         body: _widgetOptions[_selectedIndex],
       ),
     );
+  }
+
+  void _onItemTapped(int index) {
+    print(index);
   }
 }
