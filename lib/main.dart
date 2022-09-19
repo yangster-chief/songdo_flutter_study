@@ -26,11 +26,7 @@ class _MyAppState extends State<MyApp> {
     const CounterPage(),
     const BMICalculatorPage(),
     const TODOListPage(),
-    const Center(
-      child: Text(
-        'Index 3',
-      ),
-    ),
+    const StopwatchPage(),
   ];
   @override
   Widget build(BuildContext context) {
