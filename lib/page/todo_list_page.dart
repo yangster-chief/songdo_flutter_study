@@ -27,8 +27,8 @@ class _TODOListPageState extends State<TODOListPage> {
               itemCount: todoList.length,
               itemBuilder: (BuildContext context, int index) => _ListItem(
                 item: todoList[index],
-                onLongPress: (item) {
-                  final result = showDialog<String>(
+                onLongPress: (item) async {
+                  final result = await showDialog<String>(
                     context: context,
                     builder: (context) => _TODOListCustomDialog(item: item),
                   );
