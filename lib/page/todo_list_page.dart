@@ -15,54 +15,51 @@ class TODOListPage extends StatefulWidget {
 }
 
 class _TODOListPageState extends State<TODOListPage> {
-  // List<String> todoList = [
-  //   'Flutter study 1주차 숙제 하기',
-  //   'Flutter docs 정독하기',
-  //   'FlutterFire 적용',
-  // ];
+  List<String> todoList = [];
 
   final _todoController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) => Stack(
+  Widget build(BuildContext context) => Column(
         children: [
-          ListView.builder(
-            itemCount: 255,
-            itemBuilder: (BuildContext context, int index) =>
-                _ListItem(item: '$index 번째 아이템'),
+          Expanded(
+            child: ListView.builder(
+              itemCount: todoList.length,
+              itemBuilder: (BuildContext context, int index) =>
+                  _ListItem(item: todoList[index]),
+            ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              color: Colors.white,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: _todoController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(), hintText: '할일 입력'),
-                    ),
+          Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.white,
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: _todoController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), hintText: '할일 입력'),
                   ),
-                  const SizedBox(width: 16),
-                  SizedBox(
-                    width: 72,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: _onPressed,
-                      child: const Text('add'),
-                    ),
-                  )
-                ],
-              ),
+                ),
+                const SizedBox(width: 16),
+                SizedBox(
+                  width: 72,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: _onPressed,
+                    child: const Text('add'),
+                  ),
+                )
+              ],
             ),
           ),
         ],
       );
 
   void _onPressed() {
-    print(_todoController.text);
+    setState(() {
+      todoList.add(_todoController.text);
+    });
   }
 }
 
