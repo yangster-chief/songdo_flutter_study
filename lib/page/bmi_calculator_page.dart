@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_study/page/bmi_calculate_result_page.dart';
 
 ///
 /// flutter_study
@@ -18,8 +19,6 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
   final _heightController = TextEditingController();
 
   final _weightController = TextEditingController();
-
-  double _bmi = 0;
 
   @override
   Widget build(BuildContext context) => Center(
@@ -50,23 +49,24 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                   child: const Text('계산하기'),
                 ),
               ),
-              const SizedBox(height: 32),
-              Text('BMI 지수 : $_bmi'),
             ],
           ),
         ),
       );
 
   void _onPressed() {
-    _calculateBMI(
-      height: int.tryParse(_heightController.text) ?? 0,
-      weight: int.tryParse(_weightController.text) ?? 0,
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BMICalculateResultPage(
+          height: int.tryParse(_heightController.text) ?? 0,
+          weight: int.tryParse(_weightController.text) ?? 0,
+        ),
+      ),
     );
   }
 
-  void _calculateBMI({required int height, required int weight}) {
-    setState(() {
-      _bmi = weight / ((height / 100) * (height / 100));
-    });
+  double _calculateBMI({required int height, required int weight}) {
+    return weight / ((height / 100) * (height / 100));
   }
 }
