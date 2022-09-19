@@ -16,11 +16,7 @@ class _MyAppState extends State<MyApp> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
-    const Center(
-      child: Text(
-        'Index 0',
-      ),
-    ),
+    const CounterPage(),
     const Center(
       child: Text(
         'Index 1',
