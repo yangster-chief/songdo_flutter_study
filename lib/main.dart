@@ -13,27 +13,57 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _widgetOptions = <Widget>[
+    const Center(
+      child: Text(
+        'Index 0',
+      ),
+    ),
+    const Center(
+      child: Text(
+        'Index 1',
+      ),
+    ),
+    const Center(
+      child: Text(
+        'Index 2',
+      ),
+    ),
+    const Center(
+      child: Text(
+        'Index 3',
+      ),
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('widget.title'),
+          title: const Text('widget.title'),
         ),
-        body: CounterPage(),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          unselectedItemColor: Colors.grey,
+          selectedItemColor: Colors.lightBlue,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Counter'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.calculate_outlined), label: 'BMI Cal'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.task_alt_rounded), label: 'To-do list'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.watch_later_outlined), label: 'Stopwatch'),
+          ],
+        ),
+        body: _widgetOptions[_selectedIndex],
+      ),
     );
   }
 }
