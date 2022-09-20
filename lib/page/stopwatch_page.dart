@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 ///
@@ -15,6 +17,8 @@ class StopwatchPage extends StatefulWidget {
 }
 
 class _StopwatchPageState extends State<StopwatchPage> {
+  Timer? _timer;
+  int _duration = 0;
   bool _isRunning = false;
 
   @override
@@ -22,11 +26,14 @@ class _StopwatchPageState extends State<StopwatchPage> {
         body: Column(
           children: [
             Expanded(
-              child: Center(
-                child: Text(
-                  '00:00',
-                  style: TextStyle(fontSize: 48),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '$_duration',
+                    style: const TextStyle(fontSize: 48),
+                  )
+                ],
               ),
             ),
             Row(
@@ -81,9 +88,21 @@ class _StopwatchPageState extends State<StopwatchPage> {
       );
 
   void _onPressed() {
-    setState(() {
-      _isRunning = !_isRunning;
-    });
+    if (!_isRunning) {
+      setState(() {
+        _isRunning = true;
+      });
+      _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
+        setState(() {
+          _duration++;
+        });
+      });
+    } else {
+      _timer?.cancel();
+      setState(() {
+        _isRunning = false;
+      });
+    }
   }
 
   void _onReset() {
