@@ -21,6 +21,8 @@ class _StopwatchPageState extends State<StopwatchPage> {
   int _duration = 0;
   bool _isRunning = false;
 
+  final List<int> _record = [];
+
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Column(
@@ -39,6 +41,20 @@ class _StopwatchPageState extends State<StopwatchPage> {
                     style: const TextStyle(fontSize: 32),
                   ),
                 ],
+              ),
+            ),
+            SizedBox(
+              height: 216,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: _record.length,
+                itemBuilder: (context, index) => _RecordItem(
+                  index: index,
+                  duration: _record[index],
+                  diff: index == 0
+                      ? _record[0]
+                      : _record[index] - _record[index - 1],
+                ),
               ),
             ),
             Row(
@@ -74,7 +90,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
                 ),
                 InkWell(
                   onTap: () {
-                    _onRecord();
+                    _onRecord(_duration);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16),
@@ -111,11 +127,16 @@ class _StopwatchPageState extends State<StopwatchPage> {
   }
 
   void _onReset() {
-    print('reset');
+    _timer?.cancel();
+    setState(() {
+      _isRunning = false;
+      _duration = 0;
+      _record.clear();
+    });
   }
 
-  void _onRecord() {
-    print('record');
+  void _onRecord(int duration) {
+    _record.add(duration);
   }
 
   @override
@@ -123,4 +144,34 @@ class _StopwatchPageState extends State<StopwatchPage> {
     _timer?.cancel();
     super.dispose();
   }
+}
+
+class _RecordItem extends StatelessWidget {
+  const _RecordItem(
+      {Key? key,
+      required this.index,
+      required this.duration,
+      required this.diff})
+      : super(key: key);
+
+  final int index;
+  final int duration;
+  final int diff;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('랩 ${index + 1}'),
+            const SizedBox(width: 16),
+            Text(
+                '${(duration ~/ (60 * 60 * 100) % 60).toString().padLeft(2, '0')} : ${(duration ~/ (60 * 100) % 60).toString().padLeft(2, '0')} : ${(duration ~/ 100 % 60).toString().padLeft(2, '0')} . ${(duration % 100).toString().padLeft(2, '0')}'),
+            const SizedBox(width: 16),
+            Text(
+                '${(diff ~/ (60 * 60 * 100) % 60).toString().padLeft(2, '0')} : ${(diff ~/ (60 * 100) % 60).toString().padLeft(2, '0')} : ${(diff ~/ 100 % 60).toString().padLeft(2, '0')} . ${(diff % 100).toString().padLeft(2, '0')}'),
+          ],
+        ),
+      );
 }
