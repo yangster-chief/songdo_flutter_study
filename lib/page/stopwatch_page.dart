@@ -117,4 +117,10 @@ class _StopwatchPageState extends State<StopwatchPage> {
   void _onRecord() {
     print('record');
   }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 }
