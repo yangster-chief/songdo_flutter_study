@@ -8,6 +8,9 @@ import 'package:flutter_study/page/bmi_calculate_result_page.dart';
 ///
 /// Description:
 ///
+
+enum Gender { male, female }
+
 class BMICalculatorPage extends StatefulWidget {
   const BMICalculatorPage({Key? key}) : super(key: key);
 
@@ -19,6 +22,8 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
   final _heightController = TextEditingController();
 
   final _weightController = TextEditingController();
+
+  Gender _gender = Gender.male;
 
   @override
   Widget build(BuildContext context) => Center(
@@ -42,6 +47,34 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                     border: OutlineInputBorder(), hintText: '몸무게 입력'),
               ),
               const SizedBox(height: 16),
+              Column(
+                children: <Widget>[
+                  ListTile(
+                    title: const Text('남'),
+                    leading: Radio<Gender>(
+                      value: Gender.male,
+                      groupValue: _gender,
+                      onChanged: (Gender? value) {
+                        setState(() {
+                          _gender = value ?? Gender.male;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('여'),
+                    leading: Radio<Gender>(
+                      value: Gender.female,
+                      groupValue: _gender,
+                      onChanged: (Gender? value) {
+                        setState(() {
+                          _gender = value ?? Gender.female;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(
                 height: 48,
                 child: ElevatedButton(
@@ -71,6 +104,7 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
   }
 
   double _calculateBMI({required int height, required int weight}) {
-    return weight / ((height / 100) * (height / 100));
+    final c = _gender == Gender.male ? 22 : 21;
+    return weight / ((height / 100) * (height / 100) * c);
   }
 }
