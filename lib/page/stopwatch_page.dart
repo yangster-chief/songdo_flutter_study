@@ -27,12 +27,17 @@ class _StopwatchPageState extends State<StopwatchPage> {
           children: [
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '$_duration',
+                    '${(_duration ~/ (60 * 60 * 100) % 60).toString().padLeft(2, '0')} : ${(_duration ~/ (60 * 100) % 60).toString().padLeft(2, '0')} : ${(_duration ~/ 100 % 60).toString().padLeft(2, '0')}',
                     style: const TextStyle(fontSize: 48),
-                  )
+                  ),
+                  Text(
+                    '${_duration % 100}',
+                    style: const TextStyle(fontSize: 32),
+                  ),
                 ],
               ),
             ),
