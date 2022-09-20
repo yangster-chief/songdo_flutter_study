@@ -57,7 +57,7 @@ class BMICalculateResultPage extends StatelessWidget {
         color: Colors.red,
       );
     } else if (bmi < 1.6) {
-      result = '경도 비만';
+      result = '중정도 비만';
       icon = const Icon(
         Icons.sentiment_very_dissatisfied,
         size: 108,
