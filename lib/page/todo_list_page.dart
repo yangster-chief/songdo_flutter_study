@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_study/page/todo_item_arguments.dart';
+import 'package:flutter_study/page/todo_item_page.dart';
 
 ///
 /// flutter_study
@@ -15,7 +17,7 @@ class TODOListPage extends StatefulWidget {
 }
 
 class _TODOListPageState extends State<TODOListPage> {
-  List<String> todoList = [];
+  List<TaskItem> todoList = [];
 
   final _todoController = TextEditingController();
 
@@ -28,18 +30,23 @@ class _TODOListPageState extends State<TODOListPage> {
               itemBuilder: (BuildContext context, int index) => _ListItem(
                 item: todoList[index],
                 onLongPress: (item) async {
-                  final result = await showDialog<String>(
-                    context: context,
-                    builder: (context) => _TODOListCustomDialog(item: item),
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute<TODOItemArguments>(
+                      builder: (context) =>
+                          TODOItemPage(item: item, index: index),
+                    ),
                   );
-                  setState(() {
-                    if (result == 'Delete') {
-                      todoList.removeAt(index);
-                    } else {
-                      print(result);
-                      todoList[index] = result ?? '';
-                    }
-                  });
+                  if (result != null && result.isUpdate) {
+                    setState(() {
+                      todoList[result.index] = result.item;
+                    });
+                  }
+                  if (result != null && result.isDelete) {
+                    setState(() {
+                      todoList.removeAt(result.index);
+                    });
+                  }
                 },
               ),
             ),
@@ -73,31 +80,68 @@ class _TODOListPageState extends State<TODOListPage> {
 
   void _onPressed() {
     setState(() {
-      todoList.add(_todoController.text);
+      todoList.add(TaskItem(_todoController.text, null));
       _todoController.clear();
     });
   }
 }
 
-class _ListItem extends StatelessWidget {
+class TaskItem {
+  String title;
+  bool isFinished = false;
+  DateTime? dateTime;
+
+  TaskItem(this.title, this.dateTime);
+}
+
+class _ListItem extends StatefulWidget {
   const _ListItem({
     Key? key,
     required this.item,
     required this.onLongPress,
   }) : super(key: key);
 
-  final String item;
+  final TaskItem item;
 
-  final void Function(String) onLongPress;
+  final void Function(TaskItem) onLongPress;
 
   @override
+  State<_ListItem> createState() => _ListItemState();
+}
+
+class _ListItemState extends State<_ListItem> {
+  @override
   Widget build(BuildContext context) {
+    Widget title = Text(
+      widget.item.title,
+      textAlign: TextAlign.center,
+    );
+
+    if (widget.item.isFinished) {
+      title = Text(
+        widget.item.title,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+            decoration: TextDecoration.lineThrough, color: Colors.grey),
+      );
+    } else if (widget.item.dateTime != null) {
+      final now = DateTime.now();
+      final diff = widget.item.dateTime!.difference(now);
+      if (diff.inDays < 0) {
+        title = Text(
+          widget.item.title,
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Colors.red),
+        );
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8),
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
         onLongPress: () {
-          onLongPress(item);
+          widget.onLongPress(widget.item);
         },
         child: Container(
           height: 56,
@@ -105,51 +149,23 @@ class _ListItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(width: 1, color: Colors.grey),
           ),
-          child: Center(
-            child: Text(
-              item,
-              textAlign: TextAlign.center,
-            ),
+          child: Row(
+            children: [
+              Checkbox(
+                value: widget.item.isFinished,
+                onChanged: (value) {
+                  setState(() {
+                    widget.item.isFinished = value ?? false;
+                  });
+                },
+              ),
+              Center(
+                child: title,
+              ),
+            ],
           ),
         ),
       ),
     );
   }
-}
-
-class _TODOListCustomDialog extends StatefulWidget {
-  const _TODOListCustomDialog({Key? key, required this.item}) : super(key: key);
-
-  final String item;
-
-  @override
-  State<_TODOListCustomDialog> createState() => _TODOListCustomDialogState();
-}
-
-class _TODOListCustomDialogState extends State<_TODOListCustomDialog> {
-  late TextEditingController _itemController;
-
-  @override
-  void initState() {
-    super.initState();
-    _itemController = TextEditingController(text: widget.item);
-  }
-
-  @override
-  Widget build(BuildContext context) => AlertDialog(
-        title: const Text('할일 수정/삭제'),
-        content: TextFormField(
-          controller: _itemController,
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'Delete'),
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, _itemController.text),
-            child: const Text('Update'),
-          ),
-        ],
-      );
 }

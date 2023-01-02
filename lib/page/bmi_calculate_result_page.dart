@@ -28,29 +28,43 @@ class BMICalculateResultPage extends StatelessWidget {
       size: 108,
       color: Colors.red,
     );
-    if (bmi < 20) {
+    if (bmi < 0.9) {
       result = '저체중';
       icon = const Icon(
         Icons.sentiment_neutral_outlined,
         size: 108,
         color: Colors.blue,
       );
-    } else if (bmi < 24) {
+    } else if (bmi < 1.1) {
       result = '정상';
       icon = const Icon(
         Icons.sentiment_very_satisfied,
         size: 108,
         color: Colors.green,
       );
-    } else if (bmi < 30) {
+    } else if (bmi < 1.2) {
       result = '과체중';
       icon = const Icon(
         Icons.sentiment_neutral_outlined,
         size: 108,
         color: Colors.yellow,
       );
+    } else if (bmi < 1.3) {
+      result = '경도 비만';
+      icon = const Icon(
+        Icons.sentiment_very_dissatisfied,
+        size: 108,
+        color: Colors.red,
+      );
+    } else if (bmi < 1.6) {
+      result = '중정도 비만';
+      icon = const Icon(
+        Icons.sentiment_very_dissatisfied,
+        size: 108,
+        color: Colors.red,
+      );
     } else {
-      result = '비만';
+      result = '고도 비만';
       icon = const Icon(
         Icons.sentiment_very_dissatisfied,
         size: 108,
@@ -61,7 +75,7 @@ class BMICalculateResultPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          '신체질량지수(BMI)는 ${bmi.toStringAsFixed(1)}로\n$result 입니다.',
+          '체질량지수(BMI)는 ${(bmi * 100).toStringAsFixed(1)}로\n$result 입니다.',
           style: const TextStyle(fontSize: 24),
           textAlign: TextAlign.center,
         ),
